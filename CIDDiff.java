@@ -1,5 +1,5 @@
 /*/////////////////////////////////
- * CIDDiff V1.1
+ * CIDDiff V1.2
  * Creates readable difference reports for ClienItemDefinitions files from PS2.
  * Created by: Alek "binarycoder" Bollig, 2016
 *//////////////////////////////////
@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class CIDDiff {
 	public static void main(String[] args) {
-		System.out.println("CIDDiff v 1.1");
+		System.out.println("CIDDiff v 1.2");
 		System.out.println("Scanning ClientItemDefinitions.txt");
 		ArrayList<ArrayList<String>> oldData = parseString("ClientItemDefinitions.txt");
 		System.out.println("Finished.");
@@ -104,8 +104,8 @@ public class CIDDiff {
 		while (newData.size() > oldData.size()) {
 			String outputString = "New Entry: ";
 			for (int i =0; i < newData.get(newData.size() - 1).size(); i++) {
-				if (i == 0) {
-					String realName = "Global.Text." + (newData.get(newData.size() - 1).get(2));
+				if (i == 2 || i == 3) {
+					String realName = "Global.Text." + (newData.get(newData.size() - 1).get(i));
 					JenkinsHash jh = new JenkinsHash();
 					long realLong = jh.hash(realName.getBytes());
 					for (int j = 0; j < nameData.size(); j++) {
@@ -114,9 +114,9 @@ public class CIDDiff {
 							realName = tempArray[1];
 						}
 					}
-					outputString += "\n * " + newData.get(0).get(i) + ": "
-							+ newData.get(newData.size() - 1).get(i)
-							+ " \"" + realName + "\"";
+					outputString += "\n * " + newData.get(0).get(i) + ": \""
+							+ realName + "\" (" + newData.get(newData.size() - 1).get(i)
+							+ ")";
 				} else {
 					outputString += "\n * " + newData.get(0).get(i) + ": "
 						+ newData.get(newData.size() - 1).get(i);
