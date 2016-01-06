@@ -1,17 +1,22 @@
 /*/////////////////////////////////
- * CIDDiff V1.0
+ * CIDDiff V1.1
  * Creates readable difference reports for ClienItemDefinitions files from PS2.
  * Created by: Alek "binarycoder" Bollig, 2016
 *//////////////////////////////////
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class CIDDiff {
 	public static void main(String[] args) {
-		System.out.println("CIDDiff v 0.2");
+		System.out.println("CIDDiff v 1.1");
 		System.out.println("Scanning ClientItemDefinitions.txt");
 		ArrayList<ArrayList<String>> oldData = parseString("ClientItemDefinitions.txt");
 		System.out.println("Finished.");
@@ -29,7 +34,14 @@ public class CIDDiff {
 			System.out.println(resultantData.get(i));
 		}
 		System.out.println("---------------------------------------------------------");
-		
+		Path file = Paths.get("output.txt");
+		try {
+			Files.write(file, resultantData, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Results written to \"output.txt\"");
 	}
 	private static ArrayList<String[]> parseLocale(String fileLocation) {
 		File file = new File(fileLocation);
@@ -51,6 +63,7 @@ public class CIDDiff {
 			System.out.println("Error: " + fileLocation
 					+ " not found in local directory. Exiting.");
 			e.printStackTrace();
+			System.exit(1);
 		}
 		return null;
 	}
@@ -80,6 +93,7 @@ public class CIDDiff {
 			System.out.println("Error: " + fileLocation
 					+ " not found in local directory. Exiting.");
 			e.printStackTrace();
+			System.exit(1);
 		}
 		return null;
 		

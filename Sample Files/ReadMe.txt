@@ -1,0 +1,1 @@
+These are sample files to display the functionality of the program. Move them into the program's root directory to use them.
